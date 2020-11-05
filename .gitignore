@@ -1,5 +1,9 @@
 # Dependency directories
 node_modules/
 
+#Prod/Dreamhost files
+.htaccess
+tmp
+
 #OS
 .DS_Store
