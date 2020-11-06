@@ -14,7 +14,8 @@
 
     <script>
         // Create WebSocket connection.
-        const socket = new WebSocket('ws://quiz.jaspaul.com:8080');
+        // const socket = new WebSocket('ws://quiz.jaspaul.com:8080');
+        const socket = new WebSocket('ws://localhost:5000');
 
         // Connection opened
         socket.addEventListener('open', function (event) {
