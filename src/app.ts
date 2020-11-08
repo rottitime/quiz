@@ -38,6 +38,17 @@ app.get('/pusher-test', (req: express.Request, res: express.Response) => {
 
 require('./routes/quizRoutes')(app)
 
+// if (process.env.NODE_ENV === 'production') {
+//express will serve up prod assets like 
+//main.js or main.css
+app.use(express.static('client/build'))
 
-app.use(express.static('public'))
+//express will server up the index.html 
+//file if it does not recognise the route
+const path = require('path')
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+})
+// }
+
 app.listen(port, () => console.log('Server running'))
