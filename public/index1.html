@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>client1</title>
+</head>
+
+<button onclick="sendMessage()">Send message</button>
+
+<body>
+    <h1>client1</h1>
+
+    <script>
+        // Create WebSocket connection.
+        // const socket = new WebSocket('ws://quiz.jaspaul.com:8080');
+        const socket = new WebSocket('ws://localhost:5000');
+
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            socket.send('Hello Server!');
+        });
+
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server ', event.data);
+        });
+
+        const sendMessage = () => {
+            socket.send('Hello from client 1')
+        }
+    </script>
+</body>
+
+</html>
