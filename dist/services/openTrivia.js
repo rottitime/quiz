@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,56 +46,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var openTrivia_1 = require("./services/openTrivia");
-// import http from "http"
-var keys = require("./config/keys");
-var Pusher = require("pusher");
-var pusher = new Pusher({
-    appId: keys.pusherAppId,
-    key: keys.pusherKey,
-    secret: keys.pusherSecret,
-    cluster: keys.pusherCluster,
-    useTLS: true
-});
-var port = keys.port;
-var app = express_1.default();
-// const server = http.createServer()
-app.get('/api/quiz/:roomid', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var quiz;
+exports.fetchQuizQuestions = exports.Difficulty = void 0;
+var axios_1 = __importDefault(require("axios"));
+//logic for fetching data
+// import { suffleArray } from "./utils";
+var suffleArray = function (array) { return __spreadArrays(array).sort(function () { return Math.random() - 0.5; }); };
+var Difficulty;
+(function (Difficulty) {
+    Difficulty["EASY"] = "easy";
+    Difficulty["MEDIUM"] = "medium";
+    Difficulty["HARD"] = "hard";
+})(Difficulty = exports.Difficulty || (exports.Difficulty = {}));
+exports.fetchQuizQuestions = function (amount, difficulty) { return __awaiter(void 0, void 0, void 0, function () {
+    var endpoint, data;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, openTrivia_1.fetchQuizQuestions(10, openTrivia_1.Difficulty.EASY)];
+            case 0:
+                endpoint = "https://opentdb.com/api.php?amount=" + amount + "&difficulty=" + difficulty + "&type=multiple";
+                return [4 /*yield*/, axios_1.default.get(endpoint)];
             case 1:
-                quiz = _a.sent();
-                pusher.trigger("my-channel1", "my-event", {
-                    quiz: quiz
-                });
-                res.send({ quiz: quiz });
-                return [2 /*return*/];
+                data = (_a.sent()).data;
+                return [2 /*return*/, data.results.map(function (question) { return (__assign(__assign({}, question), { answers: suffleArray(__spreadArrays(question.incorrect_answers, [question.correct_answer])) })); })];
         }
     });
-}); });
-app.get('/pusher-test', function (req, res) {
-    pusher.trigger("my-channel1", "my-event", {
-        message: "hello world"
-    });
-    res.send({ message: 'All pushed' });
-});
-require('./routes/quizRoutes')(app);
-// if (process.env.NODE_ENV === 'production') {
-//express will serve up prod assets like 
-//main.js or main.css
-app.use(express_1.default.static('client/build'));
-//express will server up the index.html 
-//file if it does not recognise the route
-var path = require('path');
-app.get('*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
-// }
-app.listen(port, function () { return console.log('Server running'); });
+}); };

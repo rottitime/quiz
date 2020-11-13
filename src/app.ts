@@ -1,6 +1,11 @@
 import express from 'express'
+import mongoose from "mongoose";
+import bodyParser from "body-parser"
 import { KeyProps } from "./config/keys";
 import { fetchQuizQuestions, Difficulty } from "./services/openTrivia";
+
+import "./models/quiz";
+
 // import http from "http"
 
 const keys: KeyProps = require("./config/keys");
@@ -17,6 +22,8 @@ const pusher = new Pusher({
 const port: number = keys.port;
 const app: express.Application = express()
 // const server = http.createServer()
+
+app.use(bodyParser.json())
 
 app.get('/api/quiz/:roomid', async (req, res) => {
     const quiz = await fetchQuizQuestions(10, Difficulty.EASY)
@@ -51,4 +58,9 @@ app.get('*', (req, res) => {
 })
 // }
 
+
 app.listen(port, () => console.log('Server running'))
+
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("MongoDB connected"))
+    .catch(err => console.log(err));;

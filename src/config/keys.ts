@@ -4,6 +4,11 @@ export type KeyProps = {
     pusherKey: string,
     pusherSecret: string,
     pusherCluster: string
+    mysqlDb: string,
+    mysqlHost: string,
+    mysqlUser: string,
+    mySqlPassword: string,
+    mongoURI: string
 }
 
 if (process.env.NODE_ENV === 'production') {
