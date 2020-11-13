@@ -12,7 +12,6 @@ const User: React.FC<Props> = ({ isAdmin, createQuiz }) => {
     const [name, setName] = useState<string>('')
     const inputRef = useRef<HTMLInputElement>(null)
 
-
     useEffect(() => {
         if (inputRef.current)
             inputRef.current.focus()

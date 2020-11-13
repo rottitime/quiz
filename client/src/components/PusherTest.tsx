@@ -4,7 +4,9 @@ import Pusher from "pusher-js";
 const PusherTest: React.FC = () => {
 
     useEffect(() => {
-        Pusher.logToConsole = true;
+
+        //only log for dev environemnt
+        Pusher.logToConsole = process.env.NODE_ENV === 'development' && true;
 
         const pusher = new Pusher('89387c1cc4f46e31352b', {
             //encrypted: true,
@@ -13,7 +15,7 @@ const PusherTest: React.FC = () => {
 
         const channel = pusher.subscribe('my-channel1');
         channel.bind('my-event', (data: any) => {
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
         });
     }, [])
 

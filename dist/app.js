@@ -40,7 +40,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
+var mongoose_1 = __importDefault(require("mongoose"));
+var body_parser_1 = __importDefault(require("body-parser"));
 var openTrivia_1 = require("./services/openTrivia");
+require("./models/quiz");
 // import http from "http"
 var keys = require("./config/keys");
 var Pusher = require("pusher");
@@ -54,6 +57,7 @@ var pusher = new Pusher({
 var port = keys.port;
 var app = express_1.default();
 // const server = http.createServer()
+app.use(body_parser_1.default.json());
 app.get('/api/quiz/:roomid', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var quiz;
     return __generator(this, function (_a) {
@@ -88,3 +92,7 @@ app.get('*', function (req, res) {
 });
 // }
 app.listen(port, function () { return console.log('Server running'); });
+mongoose_1.default.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(function () { return console.log("MongoDB connected"); })
+    .catch(function (err) { return console.log(err); });
+;

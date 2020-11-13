@@ -1,4 +1,4 @@
-# Dependency directories
+#dev devependencies
 node_modules/
 
 #Prod/Dreamhost files
@@ -7,3 +7,4 @@ tmp
 
 #OS
 .DS_Store
+.vscode

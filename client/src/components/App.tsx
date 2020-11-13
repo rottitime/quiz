@@ -10,7 +10,7 @@ import PusherTest from "./PusherTest";
 const App = () => {
 
   return <>
-    <h1>App</h1>
+    <h1>Greatest Quiz</h1>
 
     <PusherTest />
     <Router>

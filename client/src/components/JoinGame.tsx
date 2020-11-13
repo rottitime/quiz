@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Button from './Button/Button';
 
 const JoinGame: React.FC = () => {
     return <>
         <h1>JoinGame</h1>
-
-        <Link to="/" className="waves-effect waves-light btn-large">Home</Link>
+        <Button to="/">Home</Button>
 
     </>
 }
