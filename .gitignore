@@ -1,5 +1,6 @@
 #dev devependencies
 node_modules/
+.eslintcache
 
 #Prod/Dreamhost files
 .htaccess
