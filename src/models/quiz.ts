@@ -1,15 +1,27 @@
-import mongoose, { Schema } from "mongoose";
-import playersSchema from "./players";
+import mongoose, { Schema, Document } from 'mongoose'
+import playersSchema from './players'
+import { QuestionType } from '../services/openTrivia'
 
-const quizSchema = new Schema({
+type PlayersType = {
+  name: string
+}
+interface IQuiz extends Document {
+  code: string
+  host: string
+  game: QuestionType[]
+  players: PlayersType[]
+}
+
+const quizSchema: Schema = new Schema(
+  {
     code: { type: String, required: true },
     host: { type: String, required: true },
     players: [playersSchema],
     game: Schema.Types.Mixed
-}, {
+  },
+  {
     timestamps: true
-})
+  }
+)
 
-const Quiz = mongoose.model('quiz', quizSchema)
-
-export default Quiz
+export default mongoose.model<IQuiz>('quiz', quizSchema)

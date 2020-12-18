@@ -1,8 +1,12 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from 'mongoose'
 
-const playersSchema = new Schema({
-    name: String,
-    // responded: { type: Boolean, default: false }
+interface IPlayers extends Document {
+  name: string
+}
+
+const playersSchema: Schema = new Schema({
+  name: String
+  // responded: { type: Boolean, default: false }
 })
 
 export default playersSchema
