@@ -43,7 +43,6 @@ export default (app: Application) => {
       const newQuiz = await quiz.save()
       res.send(newQuiz)
     } catch (err) {
-      console.log('***********err', err)
       res.status(500).send(err)
     }
   })
