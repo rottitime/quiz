@@ -40,8 +40,7 @@ describe('Quiz Routes:', () => {
     mockedAxios.get.mockImplementationOnce(() => Promise.resolve({ data: mock }))
 
     const res = await request.post('/api/quiz').send({
-      host,
-      players: [{ name: host }]
+      host
     })
 
     const quiz = await Quiz.findOne({ host })

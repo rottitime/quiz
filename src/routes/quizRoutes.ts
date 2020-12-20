@@ -16,7 +16,6 @@ export default (app: Application) => {
 
   app.get('/test', (_req: Request, res: Response) => {
     const randomName: string = uniqueNamesGenerator(NAME_CONFIG)
-
     res.send({ room: `Room name:  ${randomName}` })
   })
 
@@ -27,7 +26,7 @@ export default (app: Application) => {
 
   //create quiz
   app.post('/api/quiz', async (req: Request, res: Response) => {
-    const { host, players } = req.body
+    const { host } = req.body
     const code: string = uniqueNamesGenerator(NAME_CONFIG)
 
     try {
@@ -36,7 +35,7 @@ export default (app: Application) => {
       const quiz = new Quiz({
         code,
         host,
-        players,
+        players: [{ name: host }],
         game
       })
 
